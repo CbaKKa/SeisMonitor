@@ -1,13 +1,15 @@
-package ru.mzhurov.seismonitor.api;
+package ru.mzhurov.seismonitor.api.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Metadata {
+import java.net.URL;
+
+public class MetadataModel {
     @SerializedName("generated")
     private long generated;
 
     @SerializedName("url")
-    private String url;
+    private URL url;
 
     @SerializedName("title")
     private String title;
@@ -29,11 +31,11 @@ public class Metadata {
         this.generated = generated;
     }
 
-    public String getUrl() {
+    public URL getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(URL url) {
         this.url = url;
     }
 
