@@ -1,6 +1,8 @@
 package ru.mzhurov.seismonitor;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import retrofit2.Call;
@@ -10,6 +12,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.mzhurov.seismonitor.api.ApiEarthquake;
 import ru.mzhurov.seismonitor.api.models.FeatureCollectionModel;
+import ru.mzhurov.seismonitor.data.RetrofitRepository;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,5 +46,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //</editor-fold>
+
+        RetrofitRepository.getData().observe(this, new Observer<FeatureCollectionModel>() {
+            @Override
+            public void onChanged(@Nullable FeatureCollectionModel featureCollectionModel) {
+                featureCollectionModel = featureCollectionModel;
+            }
+        });
     }
 }
