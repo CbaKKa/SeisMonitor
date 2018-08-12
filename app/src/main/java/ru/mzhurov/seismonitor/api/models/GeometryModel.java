@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-class GeometryModel {
+public class GeometryModel {
     @SerializedName("type")
     private String type;
 
     @SerializedName("coordinates")
-    private List<Float> coordinates;
+    private List<Double> coordinates;
 
     public GeometryModel() {
     }
@@ -22,11 +22,11 @@ class GeometryModel {
         this.type = type;
     }
 
-    public List<Float> getCoordinates() {
+    public List<Double> getCoordinates() {
         return coordinates;
     }
 
-    public void setCoordinates(List<Float> coordinates) {
+    public void setCoordinates(List<Double> coordinates) {
         this.coordinates = coordinates;
     }
 }

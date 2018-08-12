@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.net.URL;
 
-class PropertiesModel {
+public class PropertiesModel {
     @SerializedName("mag")
-    private float mag;
+    private double mag;
 
     @SerializedName("time")
     private long time;
@@ -86,11 +86,11 @@ class PropertiesModel {
     public PropertiesModel() {
     }
 
-    public float getMag() {
+    public double getMag() {
         return mag;
     }
 
-    public void setMag(float mag) {
+    public void setMag(double mag) {
         this.mag = mag;
     }
 

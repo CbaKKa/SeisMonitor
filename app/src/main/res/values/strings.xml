@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">SeisMonitor</string>
+    <string name="app_name">SeisMonitor Test Branch</string>
+    <string name="button_text_all_earthquakes">All Earthquakes</string>
 </resources>

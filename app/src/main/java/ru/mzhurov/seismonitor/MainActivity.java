@@ -1,57 +1,50 @@
 package ru.mzhurov.seismonitor;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import ru.mzhurov.seismonitor.api.ApiEarthquake;
-import ru.mzhurov.seismonitor.api.models.FeatureCollectionModel;
+import java.util.List;
+
 import ru.mzhurov.seismonitor.data.RetrofitRepository;
+import ru.mzhurov.seismonitor.models.Earthquake;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static ApiEarthquake apiEarthquake;
-    private Retrofit retrofit;
-    private FeatureCollectionModel featureCollectionModel;
+    private static List<Earthquake> earthquakes;
+
+    private Button allEarthqueakesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //<editor-fold desc="Retrofit example">
-        retrofit = new Retrofit.Builder()
-                .baseUrl("https://earthquake.usgs.gov/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        apiEarthquake = retrofit.create(ApiEarthquake.class);
-
-        apiEarthquake.getData().enqueue(new Callback<FeatureCollectionModel>() {
+        allEarthqueakesButton = findViewById(R.id.button_all_earthquakes);
+        allEarthqueakesButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<FeatureCollectionModel> call, Response<FeatureCollectionModel> response) {
-                featureCollectionModel = response.body();
-            }
+            public void onClick(final View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-            @Override
-            public void onFailure(Call<FeatureCollectionModel> call, Throwable t) {
-                int a;
-                a = 0;
+                fragmentTransaction.add(R.id.earthquakes_list_fragment, new EarthquakesFragment());
+
+                fragmentTransaction.commit();
             }
         });
-        //</editor-fold>
 
-        RetrofitRepository.getData().observe(this, new Observer<FeatureCollectionModel>() {
+        RetrofitRepository.getData().observe(this, new Observer<List<Earthquake>>() {
             @Override
-            public void onChanged(@Nullable FeatureCollectionModel featureCollectionModel) {
-                featureCollectionModel = featureCollectionModel;
+            public void onChanged(@Nullable final List<Earthquake> earthquakes) {
+                MainActivity.earthquakes = earthquakes;
             }
         });
+
+        RetrofitRepository.getFeatureModel();
     }
 }
