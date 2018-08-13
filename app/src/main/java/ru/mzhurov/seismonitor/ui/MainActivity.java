@@ -13,7 +13,7 @@ import java.util.List;
 
 import ru.mzhurov.seismonitor.R;
 import ru.mzhurov.seismonitor.data.RetrofitRepository;
-import ru.mzhurov.seismonitor.models.Earthquake;
+import ru.mzhurov.seismonitor.ui.model.Earthquake;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Stub"));
+        tabLayout.addTab(tabLayout.newTab().setText("Map"));
         tabLayout.addTab(tabLayout.newTab().setText("Earthquakes"));
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -67,9 +67,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RetrofitRepository.getFeatureModel();
-    }
-
-    public static List<Earthquake> getEarthquakes() {
-        return earthquakes;
     }
 }

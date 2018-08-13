@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ru.mzhurov.seismonitor.models.Earthquake;
+import ru.mzhurov.seismonitor.ui.model.Earthquake;
 
 public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter {
 

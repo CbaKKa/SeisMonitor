@@ -21,7 +21,7 @@ import ru.mzhurov.seismonitor.api.models.FeatureCollectionModel;
 import ru.mzhurov.seismonitor.api.models.FeatureModel;
 import ru.mzhurov.seismonitor.api.models.GeometryModel;
 import ru.mzhurov.seismonitor.api.models.PropertiesModel;
-import ru.mzhurov.seismonitor.models.Earthquake;
+import ru.mzhurov.seismonitor.ui.model.Earthquake;
 
 public class RetrofitRepository {
 

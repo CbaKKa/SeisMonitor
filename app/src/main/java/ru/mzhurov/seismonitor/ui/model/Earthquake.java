@@ -1,4 +1,4 @@
-package ru.mzhurov.seismonitor.models;
+package ru.mzhurov.seismonitor.ui.model;
 
 public class Earthquake {
     private double longtitude;

@@ -20,12 +20,12 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 0:
-                EarthquakesTabFragment earthquakesTabFragment = new EarthquakesTabFragment();
-                return earthquakesTabFragment;
             case 1:
                 MapTabFragment mapTabFragment = new MapTabFragment();
                 return mapTabFragment;
+            case 0:
+                EarthquakesTabFragment earthquakesTabFragment = new EarthquakesTabFragment();
+                return earthquakesTabFragment;
             default:
                 return null;
         }
