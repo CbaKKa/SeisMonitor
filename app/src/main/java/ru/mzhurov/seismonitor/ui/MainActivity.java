@@ -1,23 +1,15 @@
 package ru.mzhurov.seismonitor.ui;
 
-import android.arch.lifecycle.Observer;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import java.util.List;
-
 import ru.mzhurov.seismonitor.R;
-import ru.mzhurov.seismonitor.data.RetrofitRepository;
-import ru.mzhurov.seismonitor.ui.model.Earthquake;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static List<Earthquake> earthquakes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        RetrofitRepository.getData().observe(this, new Observer<List<Earthquake>>() {
-            @Override
-            public void onChanged(@Nullable final List<Earthquake> earthquakes) {
-                MainActivity.earthquakes = earthquakes;
-            }
-        });
-
-        RetrofitRepository.getFeatureModel();
+//        RetrofitRepository.getData().observe(this, new Observer<List<Earthquake>>() {
+//            @Override
+//            public void onChanged(@Nullable final List<Earthquake> earthquakes) {
+//                MainActivity.earthquakes = earthquakes;
+//            }
+//        });
+//
+//        RetrofitRepository.getFeatureModel();
     }
 }

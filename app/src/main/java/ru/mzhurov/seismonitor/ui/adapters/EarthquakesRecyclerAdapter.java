@@ -27,7 +27,11 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public EarthquakesRecyclerAdapter(List<Earthquake> earthquakes) {
+//    public EarthquakesRecyclerAdapter(List<Earthquake> earthquakes) {
+//        this.earthquakes = earthquakes;
+//    }
+
+    public void setEarthquakes(final List<Earthquake> earthquakes) {
         this.earthquakes = earthquakes;
     }
 

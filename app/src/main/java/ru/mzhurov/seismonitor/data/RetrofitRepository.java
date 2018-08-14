@@ -1,6 +1,5 @@
 package ru.mzhurov.seismonitor.data;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
@@ -25,8 +24,8 @@ import ru.mzhurov.seismonitor.ui.model.Earthquake;
 
 public class RetrofitRepository {
 
-    public static final String                            BASE_URL = "https://earthquake.usgs.gov/";
-    private static      MutableLiveData<List<Earthquake>> data     = new MutableLiveData<>();
+    public static final String BASE_URL = "https://earthquake.usgs.gov/";
+    private static MutableLiveData<List<Earthquake>> data = new MutableLiveData<>();
 
     private static Retrofit retrofit = null;
 
@@ -42,7 +41,7 @@ public class RetrofitRepository {
         return retrofit;
     }
 
-    public static LiveData<List<Earthquake>> getData() {
+    public static MutableLiveData<List<Earthquake>> getData() {
         return data;
     }
 

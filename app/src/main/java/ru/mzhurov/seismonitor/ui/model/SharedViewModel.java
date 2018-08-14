@@ -1,21 +1,34 @@
 package ru.mzhurov.seismonitor.ui.model;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
-public class SharedViewModel extends ViewModel {
+import ru.mzhurov.seismonitor.data.RetrofitRepository;
 
-    private final MutableLiveData<List<Earthquake>> mutableLiveData = new MutableLiveData<>();
+public class SharedViewModel extends AndroidViewModel {
 
-    public List<Earthquake> getData() {
-        return mutableLiveData.getValue();
+    private MutableLiveData<List<Earthquake>> mutableLiveData;
+
+    public SharedViewModel(@NonNull Application application) {
+        super(application);
     }
 
-    public void setData(final List<Earthquake> earthquakes) {
-        mutableLiveData.postValue(earthquakes);
+    public MutableLiveData<List<Earthquake>> getData() {
+        if (mutableLiveData == null) {
+            mutableLiveData = RetrofitRepository.getData();
+        }
+
+        return mutableLiveData;
     }
 
+    public Earthquake getEarthquakeByPosition(final int i) {
+        final List<Earthquake> earthquakes = mutableLiveData.getValue();
+
+        return earthquakes.get(i);
+    }
 
 }
