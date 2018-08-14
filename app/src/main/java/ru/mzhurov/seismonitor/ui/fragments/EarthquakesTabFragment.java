@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.mzhurov.seismonitor.R;
-import ru.mzhurov.seismonitor.ui.adapters.EarthquakesRecyclerAdapter;
 import ru.mzhurov.seismonitor.ui.model.SharedViewModel;
 
 public class EarthquakesTabFragment extends Fragment {
@@ -35,7 +34,7 @@ public class EarthquakesTabFragment extends Fragment {
         //TODO
 //        earthquakes =
 
-                recyclerView = getView().findViewById(R.id.earthquakes_recycler_view);
+        recyclerView = getView().findViewById(R.id.earthquakes_recycler_view);
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(getView().getContext());
