@@ -1,5 +1,7 @@
 package ru.mzhurov.seismonitor.ui.fragments;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,6 +46,7 @@ public class EarthquakesTabFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new EarthquakesRecyclerAdapter();
+        recyclerView.setAdapter(adapter);
 
         sharedViewModel.getData().observe(this, new Observer<List<Earthquake>>() {
             @Override
@@ -51,7 +54,5 @@ public class EarthquakesTabFragment extends Fragment {
                 adapter.setEarthquakes(earthquakes);
             }
         });
-
-        recyclerView.setAdapter(adapter);
     }
 }

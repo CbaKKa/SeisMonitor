@@ -19,6 +19,8 @@ public class SharedViewModel extends AndroidViewModel {
 
     public MutableLiveData<List<Earthquake>> getData() {
         if (mutableLiveData == null) {
+            RetrofitRepository.getFeatureModel();
+
             mutableLiveData = RetrofitRepository.getData();
         }
 
