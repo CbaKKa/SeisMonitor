@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--Dangerous colors-->
+    <color name="colorNoDanger">#FFFFFF</color>
+    <color name="colorLowDanger">#00FF00</color>
+    <color name="colorMidDanger">#FFFF00</color>
+    <color name="colorHighDanger">#FF0000</color>
+    <color name="colorExtremeDanger">#000000</color>
 </resources>

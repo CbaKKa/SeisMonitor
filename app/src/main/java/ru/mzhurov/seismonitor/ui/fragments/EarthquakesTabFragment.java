@@ -45,7 +45,7 @@ public class EarthquakesTabFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getView().getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new EarthquakesRecyclerAdapter();
+        adapter = new EarthquakesRecyclerAdapter(getContext());
         recyclerView.setAdapter(adapter);
 
         sharedViewModel.getData().observe(this, new Observer<List<Earthquake>>() {

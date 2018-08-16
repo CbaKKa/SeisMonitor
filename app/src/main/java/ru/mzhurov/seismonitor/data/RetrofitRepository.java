@@ -3,7 +3,10 @@ package ru.mzhurov.seismonitor.data;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,10 +51,20 @@ public class RetrofitRepository {
     public static void getFeatureModel() {
         Log.d("", "PROCESSING IN THREAD BEFORE RETROFIT CALL " + Thread.currentThread().getName());
 
+        final String startDateString;
+        final String endDateString;
+        final Calendar calendar = Calendar.getInstance();
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        endDateString = simpleDateFormat.format(calendar.getTime());
+
+        calendar.add(Calendar.DATE, -1);
+        startDateString = simpleDateFormat.format(calendar.getTime());
+
         final Map<String, String> queryMap = new HashMap<>();
         queryMap.put(ApiFields.FORMAT, "geojson");
-        queryMap.put(ApiFields.START_TIME, "2014-01-01");
-        queryMap.put(ApiFields.END_TIME, "2014-01-02");
+        queryMap.put(ApiFields.START_TIME, startDateString);
+        queryMap.put(ApiFields.END_TIME, endDateString);
 
         final Call<FeatureCollectionModel> call = getRetrofitClient().create(ApiEarthquake.class)
                 .getData(queryMap);
