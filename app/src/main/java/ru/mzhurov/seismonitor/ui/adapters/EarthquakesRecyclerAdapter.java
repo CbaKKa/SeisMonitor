@@ -14,6 +14,7 @@ import java.util.List;
 
 import ru.mzhurov.seismonitor.R;
 import ru.mzhurov.seismonitor.ui.model.Earthquake;
+import ru.mzhurov.seismonitor.ui.view.CircularTextView;
 
 public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<EarthquakesRecyclerAdapter.ViewHolder> {
 
@@ -25,7 +26,7 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
         public TextView latitudeTextView;
         public TextView altitudeTextView;
         public TextView descriptionTextView;
-        public TextView magnitudeTextView;
+        public CircularTextView magnitudeTextView;
 
         public ViewHolder(View view) {
             super(view);
@@ -64,7 +65,7 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
         holder.altitudeTextView.setText(String.format("%s", earthquake.getLongtitude()));
         holder.descriptionTextView.setText(earthquake.getDescrtiption());
 
-        final TextView magnitudeTextView = holder.magnitudeTextView;
+        final CircularTextView magnitudeTextView = holder.magnitudeTextView;
 
         double magnitude = earthquake.getMagnitude();
         magnitudeTextView.setText(String.format("%s", magnitude));
@@ -85,7 +86,7 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
             magnitudeColor = resources.getColor(R.color.colorExtremeDanger);
         }
 
-        magnitudeTextView.setBackgroundColor(magnitudeColor);
+        magnitudeTextView.setSolidColor(magnitudeColor);
     }
 
     @Override
