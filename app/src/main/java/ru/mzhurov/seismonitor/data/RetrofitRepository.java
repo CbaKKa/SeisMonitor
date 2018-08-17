@@ -6,7 +6,6 @@ import android.util.Log;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,14 +22,17 @@ import ru.mzhurov.seismonitor.api.models.FeatureCollectionModel;
 import ru.mzhurov.seismonitor.api.models.FeatureModel;
 import ru.mzhurov.seismonitor.api.models.GeometryModel;
 import ru.mzhurov.seismonitor.api.models.PropertiesModel;
+import ru.mzhurov.seismonitor.data.service.GeoService;
 import ru.mzhurov.seismonitor.ui.model.Earthquake;
 
 public class RetrofitRepository {
 
     public static final String BASE_URL = "https://earthquake.usgs.gov/";
+    private static final RetrofitRepository retrofitRepository = new RetrofitRepository();
     private static MutableLiveData<List<Earthquake>> data = new MutableLiveData<>();
 
     private static Retrofit retrofit = null;
+    private static final GeoService geoService = new GeoService();
 
     public static Retrofit getRetrofitClient() {
         if (retrofit == null) {
@@ -44,17 +46,21 @@ public class RetrofitRepository {
         return retrofit;
     }
 
+    public static RetrofitRepository getInstance() {
+        return retrofitRepository;
+    }
+
     public static MutableLiveData<List<Earthquake>> getData() {
         return data;
     }
 
-    public static void getFeatureModel() {
+    public void getAllEarthquakes() {
         Log.d("", "PROCESSING IN THREAD BEFORE RETROFIT CALL " + Thread.currentThread().getName());
 
         final String startDateString;
         final String endDateString;
         final Calendar calendar = Calendar.getInstance();
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        final SimpleDateFormat simpleDateFormat = getDateFormat();
 
         endDateString = simpleDateFormat.format(calendar.getTime());
 
@@ -66,6 +72,10 @@ public class RetrofitRepository {
         queryMap.put(ApiFields.START_TIME, startDateString);
         queryMap.put(ApiFields.END_TIME, endDateString);
 
+        sendResponse(queryMap);
+    }
+
+    private void sendResponse(final Map<String, String> queryMap) {
         final Call<FeatureCollectionModel> call = getRetrofitClient().create(ApiEarthquake.class)
                 .getData(queryMap);
 
@@ -74,7 +84,7 @@ public class RetrofitRepository {
             public void onResponse(Call<FeatureCollectionModel> call, Response<FeatureCollectionModel> response) {
                 FeatureCollectionModel featureCollectionModel = response.body();
 
-                final List<Earthquake> earthquakes = new ArrayList<>();
+                List<Earthquake> earthquakes = new ArrayList<>();
 
                 for (final FeatureModel featureModel : featureCollectionModel.getFeatureModels()) {
                     final GeometryModel geometryModel = featureModel.getGeometryModel();
@@ -91,6 +101,8 @@ public class RetrofitRepository {
                     earthquakes.add(earthquake);
                 }
 
+                earthquakes = geoService.mergeEarthquakesToOneDot(earthquakes);
+
                 data.postValue(earthquakes);
 
                 Log.d("", "PROCESSING IN THREAD IN RETROFIT RESPONSE HANDLER " + Thread.currentThread().getName());
@@ -101,5 +113,9 @@ public class RetrofitRepository {
                 Log.d("", "error RETROFIT");
             }
         });
+    }
+
+    private SimpleDateFormat getDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd");
     }
 }

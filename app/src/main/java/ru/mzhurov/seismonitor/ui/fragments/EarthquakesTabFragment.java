@@ -30,19 +30,14 @@ public class EarthquakesTabFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.earthquakes_fragment, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        View view = inflater.inflate(R.layout.earthquakes_fragment, container, false);
 
         sharedViewModel = ViewModelProviders.of(this).get(SharedViewModel.class);
 
-        recyclerView = getView().findViewById(R.id.earthquakes_recycler_view);
+        recyclerView = view.findViewById(R.id.earthquakes_recycler_view);
         recyclerView.setHasFixedSize(true);
 
-        layoutManager = new LinearLayoutManager(getView().getContext());
+        layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new EarthquakesRecyclerAdapter(getContext());
@@ -54,5 +49,7 @@ public class EarthquakesTabFragment extends Fragment {
                 adapter.setEarthquakes(earthquakes);
             }
         });
+
+        return view;
     }
 }

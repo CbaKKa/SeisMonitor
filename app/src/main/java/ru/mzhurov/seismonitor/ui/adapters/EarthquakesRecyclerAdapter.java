@@ -9,8 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import ru.mzhurov.seismonitor.R;
 import ru.mzhurov.seismonitor.ui.model.Earthquake;
@@ -26,6 +30,7 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
         public TextView latitudeTextView;
         public TextView altitudeTextView;
         public TextView descriptionTextView;
+        public TextView timeTextView;
         public CircularTextView magnitudeTextView;
 
         public ViewHolder(View view) {
@@ -34,6 +39,7 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
             latitudeTextView = view.findViewById(R.id.text_view_earthquake_latitude);
             altitudeTextView = view.findViewById(R.id.text_view_earthquake_altitude);
             descriptionTextView = view.findViewById(R.id.text_view_earthquake_description);
+            timeTextView = view.findViewById(R.id.text_view_earthquake_time);
             magnitudeTextView = view.findViewById(R.id.text_view_earthquake_magnitude);
         }
     }
@@ -87,6 +93,17 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
         }
 
         magnitudeTextView.setSolidColor(magnitudeColor);
+
+        final long timestamp = earthquake.getTime();
+        final Calendar calendar = Calendar.getInstance();
+        final TimeZone timeZone = calendar.getTimeZone();
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+
+        simpleDateFormat.setTimeZone(timeZone);
+
+        final String localTime = simpleDateFormat.format(new Date(timestamp));
+
+        holder.timeTextView.setText(localTime);
     }
 
     @Override

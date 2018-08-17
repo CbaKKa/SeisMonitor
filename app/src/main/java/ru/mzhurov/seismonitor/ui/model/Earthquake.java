@@ -57,4 +57,20 @@ public class Earthquake {
     public void setDescrtiption(final String descrtiption) {
         this.descrtiption = descrtiption;
     }
+
+    @Override
+    public int hashCode() {
+        return (int) (5 * (longtitude + latitude + time + descrtiption.hashCode()));
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Earthquake) {
+            Earthquake earthquake = (Earthquake) obj;
+
+            return (earthquake.longtitude == getLongtitude()) && (earthquake.latitude == getLatitude() && (earthquake.time == getTime() && (earthquake.magnitude == getMagnitude())));
+        } else {
+            return false;
+        }
+    }
 }
