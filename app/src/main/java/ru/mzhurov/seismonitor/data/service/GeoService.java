@@ -9,21 +9,32 @@ import ru.mzhurov.seismonitor.ui.model.Earthquake;
 
 public class GeoService {
 
-    public List<Earthquake> mergeEarthquakesToOnePoint(final List<Earthquake> earthquakes, final int radius) {
-        final List<Earthquake> baseEarthquakeList = new ArrayList<>(earthquakes);
-        final List<Earthquake> result = new ArrayList<>(earthquakes);
-        final Map<Point, List<Earthquake>> pointListMap = new HashMap<>();
+    public List<Earthquake> mergeEarthquakesToOnePoint(final List<Earthquake> earthquakes, final double radius) {
+        final Map<Point, Earthquake> earthquakesMap = new HashMap<>();
 
         for (final Earthquake earthquake : earthquakes) {
-            final double latitude = earthquake.getLatitude();
-            final double altitude = earthquake.getLongtitude();
+            double latitude = earthquake.getLatitude();
+            double altitude = earthquake.getLongtitude();
+
+//            latitude = Math.round(latitude * 100.0) / 100.0;
+//            altitude = Math.round(altitude * 100.0) / 100.0;
+            latitude = Math.round(latitude);
+            altitude = Math.round(altitude);
 
             final Point point = new Point(latitude, altitude);
 
+            final Earthquake newestEarthquake = earthquakesMap.get(point);
 
+            if (newestEarthquake == null) {
+                earthquakesMap.put(point, earthquake);
+            } else if ((newestEarthquake.getMagnitude() < earthquake.getMagnitude()) && (earthquake.getMagnitude() >= 5)) {
+                earthquakesMap.put(point, earthquake);
+            } else if (newestEarthquake.getTime() < earthquake.getTime()) {
+                earthquakesMap.put(point, earthquake);
+            }
         }
 
-        return result;
+        return new ArrayList<>(earthquakesMap.values());
     }
 
     private boolean checkPointRadius(final Earthquake baseEarthquake, final Earthquake earthquake, final double radius) {

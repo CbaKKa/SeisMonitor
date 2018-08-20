@@ -103,7 +103,7 @@ public class RetrofitRepository {
 
                 Log.d("EARTHQUAKES", "EARTHQUAKES COUNT IS: " + earthquakes.size());
 
-                earthquakes = geoService.mergeEarthquakesToOnePoint(earthquakes, 1);
+                earthquakes = geoService.mergeEarthquakesToOnePoint(earthquakes, 0.5);
 
                 data.postValue(earthquakes);
 

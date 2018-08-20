@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import ru.mzhurov.seismonitor.R;
+import ru.mzhurov.seismonitor.ui.EarthquakeColorService;
 import ru.mzhurov.seismonitor.ui.model.Earthquake;
 import ru.mzhurov.seismonitor.ui.view.CircularTextView;
 
@@ -77,20 +78,7 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
         magnitudeTextView.setText(String.format("%s", magnitude));
 
         final Resources resources = context.getResources();
-
-        int magnitudeColor;
-
-        if (magnitude <= 2) {
-            magnitudeColor = resources.getColor(R.color.colorNoDanger);
-        } else if (magnitude <= 4) {
-            magnitudeColor = resources.getColor(R.color.colorLowDanger);
-        } else if (magnitude <= 6) {
-            magnitudeColor = resources.getColor(R.color.colorMidDanger);
-        } else if (magnitude <= 8) {
-            magnitudeColor = resources.getColor(R.color.colorHighDanger);
-        } else {
-            magnitudeColor = resources.getColor(R.color.colorExtremeDanger);
-        }
+        final int magnitudeColor = EarthquakeColorService.getColor(resources, magnitude);
 
         magnitudeTextView.setSolidColor(magnitudeColor);
 
