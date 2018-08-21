@@ -14,10 +14,11 @@ public class EarthquakeItem implements ClusterItem {
     private MarkerOptions markerOptions;
     private BitmapDescriptor icon;
 
-    public EarthquakeItem(final double latitude, final double longtitude, final String description, final BitmapDescriptor icon) {
-        this.description = description;
+    public EarthquakeItem(final double latitude, final double longtitude, final double magnitude, final String description, final BitmapDescriptor icon) {
         this.latitude = latitude;
         this.longtitude = longtitude;
+        this.magnitude = magnitude;
+        this.description = description;
         this.icon = icon;
 
         markerOptions = new MarkerOptions();

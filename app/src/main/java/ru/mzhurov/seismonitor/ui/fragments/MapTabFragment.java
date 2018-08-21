@@ -24,7 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.mzhurov.seismonitor.R;
-import ru.mzhurov.seismonitor.ui.EarthquakeColorService;
+import ru.mzhurov.seismonitor.ui.BaseColorService;
+import ru.mzhurov.seismonitor.ui.DrawableColorService;
 import ru.mzhurov.seismonitor.ui.fragments.cluster.ClusterRenderer;
 import ru.mzhurov.seismonitor.ui.fragments.cluster.EarthquakeItem;
 import ru.mzhurov.seismonitor.ui.model.Earthquake;
@@ -40,6 +41,8 @@ public class MapTabFragment extends Fragment implements OnMapReadyCallback {
     private static List<Earthquake> earthquakes = new ArrayList<>();
 
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
+
+    private final BaseColorService<Integer, Integer, BitmapDescriptor> colorService = new DrawableColorService();
 
     @Nullable
     @Override
@@ -166,10 +169,10 @@ public class MapTabFragment extends Fragment implements OnMapReadyCallback {
     private void addEarthquakesToClusterManager(final List<Earthquake> earthquakesList) {
         for (final Earthquake earthquake : earthquakesList) {
             final double magnitude = earthquake.getMagnitude();
-            final BitmapDescriptor icon = EarthquakeColorService.getMarkerColor(magnitude);
+            final BitmapDescriptor icon = colorService.getColor(magnitude);
 
             final EarthquakeItem earthquakeItem = new EarthquakeItem(earthquake.getLatitude(),
-                    earthquake.getLongtitude(), earthquake.getDescrtiption(), icon);
+                    earthquake.getLongtitude(), earthquake.getMagnitude(), earthquake.getDescrtiption(), icon);
 
             mClusterManager.addItem(earthquakeItem);
 

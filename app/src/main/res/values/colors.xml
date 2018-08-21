@@ -11,8 +11,7 @@
     <color name="secondaryTextColor">#000000</color>
 
     <!--Dangerous colors-->
-    <color name="colorNoDanger">#80deea</color>
-    <color name="colorLowDanger">#64dd17</color>
+    <color name="colorLowDanger">#80deea</color>
     <color name="colorMidDanger">#ffd740</color>
     <color name="colorHighDanger">#ff9800</color>
     <color name="colorExtremeDanger">#d50000</color>

@@ -17,14 +17,25 @@ import java.util.List;
 import java.util.TimeZone;
 
 import ru.mzhurov.seismonitor.R;
-import ru.mzhurov.seismonitor.ui.EarthquakeColorService;
+import ru.mzhurov.seismonitor.ui.BaseColorService;
+import ru.mzhurov.seismonitor.ui.ResourceColorService;
 import ru.mzhurov.seismonitor.ui.model.Earthquake;
 import ru.mzhurov.seismonitor.ui.view.CircularTextView;
 
 public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<EarthquakesRecyclerAdapter.ViewHolder> {
 
+    private static SimpleDateFormat simpleDateFormat;
+
     private List<Earthquake> earthquakes = new ArrayList<>();
-    private Context context = null;
+    private Context context;
+
+    static {
+        final Calendar calendar = Calendar.getInstance();
+        final TimeZone timeZone = calendar.getTimeZone();
+        simpleDateFormat = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+
+        simpleDateFormat.setTimeZone(timeZone);
+    }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -78,16 +89,12 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
         magnitudeTextView.setText(String.format("%s", magnitude));
 
         final Resources resources = context.getResources();
-        final int magnitudeColor = EarthquakeColorService.getColor(resources, magnitude);
+        final BaseColorService<Integer, Integer, Integer> colorService = new ResourceColorService(resources);
+        final int magnitudeColor = colorService.getColor(magnitude);
 
         magnitudeTextView.setSolidColor(magnitudeColor);
 
         final long timestamp = earthquake.getTime();
-        final Calendar calendar = Calendar.getInstance();
-        final TimeZone timeZone = calendar.getTimeZone();
-        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm dd-MM-yyyy");
-
-        simpleDateFormat.setTimeZone(timeZone);
 
         final String localTime = simpleDateFormat.format(new Date(timestamp));
 

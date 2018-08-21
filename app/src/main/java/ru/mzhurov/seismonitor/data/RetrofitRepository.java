@@ -28,6 +28,7 @@ import ru.mzhurov.seismonitor.ui.model.Earthquake;
 public class RetrofitRepository {
 
     public static final String BASE_URL = "https://earthquake.usgs.gov/";
+    final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final RetrofitRepository retrofitRepository = new RetrofitRepository();
     private static MutableLiveData<List<Earthquake>> data = new MutableLiveData<>();
 
@@ -60,11 +61,10 @@ public class RetrofitRepository {
         final String startDateString;
         final String endDateString;
         final Calendar calendar = Calendar.getInstance();
-        final SimpleDateFormat simpleDateFormat = getDateFormat();
 
         endDateString = simpleDateFormat.format(calendar.getTime());
 
-        calendar.add(Calendar.DATE, -1);
+        calendar.add(Calendar.DATE, -2);
         startDateString = simpleDateFormat.format(calendar.getTime());
 
         final Map<String, String> queryMap = new HashMap<>();
@@ -103,7 +103,7 @@ public class RetrofitRepository {
 
                 Log.d("EARTHQUAKES", "EARTHQUAKES COUNT IS: " + earthquakes.size());
 
-                earthquakes = geoService.mergeEarthquakesToOnePoint(earthquakes, 0.5);
+//                earthquakes = geoService.mergeEarthquakesToOnePoint(earthquakes, 0.5);
 
                 data.postValue(earthquakes);
 
@@ -115,9 +115,5 @@ public class RetrofitRepository {
                 Log.d("", "error RETROFIT");
             }
         });
-    }
-
-    private SimpleDateFormat getDateFormat() {
-        return new SimpleDateFormat("yyyy-MM-dd");
     }
 }
