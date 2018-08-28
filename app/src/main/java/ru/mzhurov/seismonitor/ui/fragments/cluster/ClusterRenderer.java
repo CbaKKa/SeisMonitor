@@ -2,7 +2,6 @@ package ru.mzhurov.seismonitor.ui.fragments.cluster;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v4.content.ContextCompat;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -12,10 +11,11 @@ import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.ui.IconGenerator;
 
-import ru.mzhurov.seismonitor.R;
+import ru.mzhurov.seismonitor.ui.service.DrawableColorService;
 
 public class ClusterRenderer extends DefaultClusterRenderer<EarthquakeItem> {
 
+    private final DrawableColorService colorService;
     private final Context context;
     private IconGenerator iconGenerator;
 
@@ -23,6 +23,8 @@ public class ClusterRenderer extends DefaultClusterRenderer<EarthquakeItem> {
         super(context, map, clusterManager);
 
         this.context = context;
+        colorService = new DrawableColorService(context);
+
         iconGenerator = new IconGenerator(context);
 
         iconGenerator.setTextAppearance(android.support.v4.R.style.TextAppearance_Compat_Notification_Title);
@@ -56,9 +58,7 @@ public class ClusterRenderer extends DefaultClusterRenderer<EarthquakeItem> {
     }
 
     private Bitmap createIcon(final double magnitude) {
-        final int drawableId = R.drawable.shape_circle_extreme_danger;
-
-        iconGenerator.setBackground(ContextCompat.getDrawable(context, drawableId));
+        iconGenerator.setBackground(colorService.getColor(magnitude));
 
         return iconGenerator.makeIcon(String.valueOf(magnitude));
     }

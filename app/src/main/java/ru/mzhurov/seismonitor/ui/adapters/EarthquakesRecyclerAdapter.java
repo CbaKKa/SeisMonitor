@@ -1,7 +1,6 @@
 package ru.mzhurov.seismonitor.ui.adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,13 +16,14 @@ import java.util.List;
 import java.util.TimeZone;
 
 import ru.mzhurov.seismonitor.R;
-import ru.mzhurov.seismonitor.ui.EarthquakeColorService;
 import ru.mzhurov.seismonitor.ui.model.Earthquake;
+import ru.mzhurov.seismonitor.ui.service.ResourceColorService;
 import ru.mzhurov.seismonitor.ui.view.CircularTextView;
 
 public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<EarthquakesRecyclerAdapter.ViewHolder> {
 
-    private static SimpleDateFormat simpleDateFormat;
+    private static SimpleDateFormat     simpleDateFormat;
+    private static ResourceColorService colorService;
 
     private List<Earthquake> earthquakes = new ArrayList<>();
     private Context context;
@@ -38,10 +38,10 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView latitudeTextView;
-        public TextView altitudeTextView;
-        public TextView descriptionTextView;
-        public TextView timeTextView;
+        public TextView         latitudeTextView;
+        public TextView         altitudeTextView;
+        public TextView         descriptionTextView;
+        public TextView         timeTextView;
         public CircularTextView magnitudeTextView;
 
         public ViewHolder(View view) {
@@ -57,6 +57,8 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
 
     public EarthquakesRecyclerAdapter(final Context context) {
         this.context = context;
+
+        colorService = new ResourceColorService(context.getResources());
     }
 
     public void setEarthquakes(final List<Earthquake> earthquakes) {
@@ -87,8 +89,7 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
         double magnitude = earthquake.getMagnitude();
         magnitudeTextView.setText(String.format("%s", magnitude));
 
-        final Resources resources = context.getResources();
-        final int magnitudeColor = EarthquakeColorService.getColor(resources, magnitude);
+        final int magnitudeColor = colorService.getColor(magnitude);
 
         magnitudeTextView.setSolidColor(magnitudeColor);
 
