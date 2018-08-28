@@ -12,8 +12,7 @@ import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.google.maps.android.ui.IconGenerator;
 
-import ru.mzhurov.seismonitor.ui.BaseColorService;
-import ru.mzhurov.seismonitor.ui.ResourceColorService;
+import ru.mzhurov.seismonitor.R;
 
 public class ClusterRenderer extends DefaultClusterRenderer<EarthquakeItem> {
 
@@ -57,13 +56,9 @@ public class ClusterRenderer extends DefaultClusterRenderer<EarthquakeItem> {
     }
 
     private Bitmap createIcon(final double magnitude) {
-        final BaseColorService<Integer, Integer, Integer> colorService = new ResourceColorService(context.getResources());
-
-        final int drawableId = colorService.getColor(magnitude);
+        final int drawableId = R.drawable.shape_circle_extreme_danger;
 
         iconGenerator.setBackground(ContextCompat.getDrawable(context, drawableId));
-
-//        iconGenerator.setColor(colorService.getColor(magnitude));
 
         return iconGenerator.makeIcon(String.valueOf(magnitude));
     }
