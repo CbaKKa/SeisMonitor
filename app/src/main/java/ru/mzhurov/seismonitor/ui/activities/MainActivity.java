@@ -1,4 +1,4 @@
-package ru.mzhurov.seismonitor.ui;
+package ru.mzhurov.seismonitor.ui.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -16,8 +16,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
 
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+                viewPager.setCurrentItem(tab.getPosition(), true);
             }
 
             @Override
@@ -50,14 +50,5 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-//        RetrofitRepository.getData().observe(this, new Observer<List<Earthquake>>() {
-//            @Override
-//            public void onChanged(@Nullable final List<Earthquake> earthquakes) {
-//                MainActivity.earthquakes = earthquakes;
-//            }
-//        });
-//
-//        RetrofitRepository.getAllEarthquakes();
     }
 }

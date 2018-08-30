@@ -174,9 +174,9 @@ public class MapTabFragment extends Fragment implements OnMapReadyCallback {
                     earthquake.getLongtitude(), earthquake.getMagnitude(), earthquake.getDescrtiption(), icon);
 
             mClusterManager.addItem(earthquakeItem);
-
-            mClusterManager.cluster();
         }
+
+        mClusterManager.cluster();
     }
 
     private void setUpCluster() {
