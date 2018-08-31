@@ -51,9 +51,14 @@ public class ClusterRenderer extends DefaultClusterRenderer<EarthquakeItem> {
         }
 
         if (strongestEarthquake != null) {
-            final Bitmap icon = createIcon(strongestEarthquake.getMagnitude());
+//            final Bitmap icon = createIcon(strongestEarthquake.getMagnitude());
 
-            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon));
+//            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon));
+
+            final String title = strongestEarthquake.getTitle() + ", " + strongestEarthquake.getMagnitude();
+
+            markerOptions.icon(strongestEarthquake.getIcon());
+            markerOptions.title(title);
         }
     }
 

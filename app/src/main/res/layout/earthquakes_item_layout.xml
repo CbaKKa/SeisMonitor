@@ -52,14 +52,14 @@
                 <TextView
                     android:id="@+id/text_view_earthquake_altitude"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="altitude"
                     android:textAlignment="viewEnd" />
 
                 <TextView
                     android:id="@+id/text_view_earthquake_latitude"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="latitude"
                     android:textAlignment="viewEnd" />
             </LinearLayout>

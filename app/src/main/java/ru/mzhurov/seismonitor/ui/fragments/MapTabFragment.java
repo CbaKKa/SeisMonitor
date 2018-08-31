@@ -144,20 +144,8 @@ public class MapTabFragment extends Fragment implements OnMapReadyCallback {
         this.googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                final LatLng position = marker.getPosition();
-
-                Earthquake selectedEarthquake = new Earthquake();
-
-                for (final Earthquake earthquake : earthquakes) {
-                    if (earthquake.getLongtitude() == position.longitude && earthquake.getLatitude() == position.latitude) {
-                        selectedEarthquake = earthquake;
-                    }
-                }
-
-                final double magnitude = selectedEarthquake.getMagnitude();
-
                 Toast.makeText(MapTabFragment.this.getContext(),
-                        marker.getTitle() + ", " + magnitude, Toast.LENGTH_SHORT)
+                        marker.getTitle(), Toast.LENGTH_SHORT)
                         .show();
 
                 return true;
@@ -170,8 +158,10 @@ public class MapTabFragment extends Fragment implements OnMapReadyCallback {
             final double magnitude = earthquake.getMagnitude();
             final BitmapDescriptor icon = colorService.getColor(magnitude);
 
+            final String description = earthquake.getDescription()+ ", " + magnitude;
+
             final EarthquakeItem earthquakeItem = new EarthquakeItem(earthquake.getLatitude(),
-                    earthquake.getLongtitude(), earthquake.getMagnitude(), earthquake.getDescrtiption(), icon);
+                    earthquake.getLongtitude(), earthquake.getMagnitude(), description, icon);
 
             mClusterManager.addItem(earthquakeItem);
         }

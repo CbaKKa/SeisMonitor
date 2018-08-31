@@ -1,12 +1,16 @@
 package ru.mzhurov.seismonitor.ui.adapters;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +28,7 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
 
     private static SimpleDateFormat     simpleDateFormat;
     private static ResourceColorService colorService;
+    private static ClipboardManager     clipboardManager;
 
     private List<Earthquake> earthquakes = new ArrayList<>();
     private Context context;
@@ -59,6 +64,7 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
         this.context = context;
 
         colorService = new ResourceColorService(context.getResources());
+        clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
     }
 
     public void setEarthquakes(final List<Earthquake> earthquakes) {
@@ -82,7 +88,7 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
 
         holder.latitudeTextView.setText(String.format("%s", earthquake.getLatitude()));
         holder.altitudeTextView.setText(String.format("%s", earthquake.getLongtitude()));
-        holder.descriptionTextView.setText(earthquake.getDescrtiption());
+        holder.descriptionTextView.setText(earthquake.getDescription());
 
         final CircularTextView magnitudeTextView = holder.magnitudeTextView;
 
@@ -98,6 +104,21 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
         final String localTime = simpleDateFormat.format(new Date(timestamp));
 
         holder.timeTextView.setText(localTime);
+
+        final View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                final String latLng = earthquake.getLatitude() + ", " + earthquake.getLongtitude();
+
+                final ClipData clipData = ClipData.newPlainText("Earthquake LatLng", latLng);
+
+                clipboardManager.setPrimaryClip(clipData);
+
+                Toast.makeText(context, "Position copied", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        holder.itemView.findViewById(R.id.linear_layout_earthquake_coordinates).setOnClickListener(onClickListener);
     }
 
     @Override

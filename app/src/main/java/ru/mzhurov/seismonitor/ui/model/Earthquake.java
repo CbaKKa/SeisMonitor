@@ -50,7 +50,7 @@ public class Earthquake {
         this.magnitude = magnitude;
     }
 
-    public String getDescrtiption() {
+    public String getDescription() {
         return descrtiption;
     }
 
