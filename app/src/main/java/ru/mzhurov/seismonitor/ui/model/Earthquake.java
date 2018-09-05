@@ -1,6 +1,8 @@
 package ru.mzhurov.seismonitor.ui.model;
 
-public class Earthquake {
+import java.io.Serializable;
+
+public class Earthquake implements Serializable {
     private double longtitude;
     private double latitude;
     private double magnitude;

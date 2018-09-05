@@ -55,7 +55,7 @@ public class ClusterRenderer extends DefaultClusterRenderer<EarthquakeItem> {
 
 //            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon));
 
-            final String title = strongestEarthquake.getTitle() + ", " + strongestEarthquake.getMagnitude();
+            final String title = strongestEarthquake.getTitle();
 
             markerOptions.icon(strongestEarthquake.getIcon());
             markerOptions.title(title);

@@ -3,12 +3,13 @@ package ru.mzhurov.seismonitor.ui.adapters;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,8 @@ import java.util.List;
 import java.util.TimeZone;
 
 import ru.mzhurov.seismonitor.R;
+import ru.mzhurov.seismonitor.ui.EarthquakeActivity;
+import ru.mzhurov.seismonitor.ui.MainActivity;
 import ru.mzhurov.seismonitor.ui.model.Earthquake;
 import ru.mzhurov.seismonitor.ui.service.ResourceColorService;
 import ru.mzhurov.seismonitor.ui.view.CircularTextView;
@@ -83,7 +86,7 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final Earthquake earthquake = earthquakes.get(position);
 
         holder.latitudeTextView.setText(String.format("%s", earthquake.getLatitude()));
@@ -100,7 +103,6 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
         magnitudeTextView.setSolidColor(magnitudeColor);
 
         final long timestamp = earthquake.getTime();
-
         final String localTime = simpleDateFormat.format(new Date(timestamp));
 
         holder.timeTextView.setText(localTime);
@@ -119,6 +121,25 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
         };
 
         holder.itemView.findViewById(R.id.linear_layout_earthquake_coordinates).setOnClickListener(onClickListener);
+
+        final View.OnClickListener openEarthquakeOnClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                final Intent intent = new Intent(context, EarthquakeActivity.class);
+                final Bundle bundle = new Bundle();
+
+                final int id = R.string.earthquake_activity_bundle_key;
+                final String key = context.getString(id);
+
+                bundle.putSerializable(key, earthquake);
+
+                intent.putExtras(bundle);
+
+                context.startActivity(intent);
+            }
+        };
+
+        holder.itemView.getRootView().setOnClickListener(openEarthquakeOnClickListener);
     }
 
     @Override

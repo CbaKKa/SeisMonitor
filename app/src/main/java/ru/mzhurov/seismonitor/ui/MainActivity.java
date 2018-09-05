@@ -1,4 +1,4 @@
-package ru.mzhurov.seismonitor.ui.activities;
+package ru.mzhurov.seismonitor.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
