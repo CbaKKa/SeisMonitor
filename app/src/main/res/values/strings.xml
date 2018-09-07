@@ -3,4 +3,6 @@
     <string name="button_text_all_earthquakes">All Earthquakes</string>
 
     <string name="earthquake_activity_bundle_key">EARTHQUAKE_BUNDLE_ITEM</string>
+
+    <string name="time_string">Time: </string>
 </resources>
