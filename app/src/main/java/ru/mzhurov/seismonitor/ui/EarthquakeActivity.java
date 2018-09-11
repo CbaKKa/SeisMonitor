@@ -1,11 +1,16 @@
 package ru.mzhurov.seismonitor.ui;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,13 +35,18 @@ public class EarthquakeActivity extends AppCompatActivity implements OnMapReadyC
 
     private static final String MAP_BUNDLE      = "MAP_BUNDLE";
     private static final int    EARTHQUAKE_ITEM = R.string.earthquake_activity_bundle_key;
+    private static String TIME_TEXT;
+    private static String MAGNITUDE_TEXT;
+    private static String LATITUDE_TEXT;
+    private static String LONGTITUDE_TEXT;
 
     final Calendar         calendar         = Calendar.getInstance();
     final TimeZone         timeZone         = calendar.getTimeZone();
-    final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+    final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm dd:MM:yyyy");
 
-    private MapView   mapView;
-    private GoogleMap googleMap;
+    private ClipboardManager clipboardManager;
+    private MapView          mapView;
+    private GoogleMap        googleMap;
     private Earthquake earthquake = new Earthquake();
 
     @Override
@@ -45,6 +55,12 @@ public class EarthquakeActivity extends AppCompatActivity implements OnMapReadyC
         setContentView(R.layout.activity_earthquake);
 
         simpleDateFormat.setTimeZone(timeZone);
+        clipboardManager = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+
+        TIME_TEXT = getString(R.string.time_string);
+        MAGNITUDE_TEXT = getString(R.string.earthquake_activity_magnitude_text);
+        LATITUDE_TEXT = getString(R.string.earthquake_activity_latitude_text);
+        LONGTITUDE_TEXT = getString(R.string.earthquake_activity_longtitude_text);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
 
@@ -86,7 +102,30 @@ public class EarthquakeActivity extends AppCompatActivity implements OnMapReadyC
         final String timeString = simpleDateFormat.format(new Date(time));
 
         final TextView earthquakeIncidentTimeTextView = findViewById(R.id.text_view_earthquake_incident_time);
-        earthquakeIncidentTimeTextView.setText(timeString);
+        earthquakeIncidentTimeTextView.setText(TIME_TEXT + " " + timeString);
+
+        final TextView magnitudeTextView = findViewById(R.id.text_view_magnitude);
+        magnitudeTextView.setText(MAGNITUDE_TEXT + " " + String.valueOf(earthquake.getMagnitude()));
+
+        final TextView latitudeTextView = findViewById(R.id.text_view_latitude);
+        latitudeTextView.setText(LATITUDE_TEXT + " " + String.valueOf(earthquake.getLatitude()));
+
+        final TextView longtitudeTextView = findViewById(R.id.text_view_longtitude);
+        longtitudeTextView.setText(LONGTITUDE_TEXT + " " + String.valueOf(earthquake.getLongtitude()));
+
+        final LinearLayout linearLayout = (LinearLayout) longtitudeTextView.getParent();
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                final String latLng = earthquake.getLatitude() + ", " + earthquake.getLongtitude();
+
+                final ClipData clipData = ClipData.newPlainText("Earthquake LatLng", latLng);
+
+                clipboardManager.setPrimaryClip(clipData);
+
+                Toast.makeText(getApplicationContext(), "Position copied", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

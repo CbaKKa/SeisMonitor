@@ -22,7 +22,6 @@ import java.util.TimeZone;
 
 import ru.mzhurov.seismonitor.R;
 import ru.mzhurov.seismonitor.ui.EarthquakeActivity;
-import ru.mzhurov.seismonitor.ui.MainActivity;
 import ru.mzhurov.seismonitor.ui.model.Earthquake;
 import ru.mzhurov.seismonitor.ui.service.ResourceColorService;
 import ru.mzhurov.seismonitor.ui.view.CircularTextView;
@@ -30,8 +29,8 @@ import ru.mzhurov.seismonitor.ui.view.CircularTextView;
 public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<EarthquakesRecyclerAdapter.ViewHolder> {
 
     private static SimpleDateFormat     simpleDateFormat;
-    private static ResourceColorService colorService;
-    private static ClipboardManager     clipboardManager;
+    private        ResourceColorService colorService;
+    private        ClipboardManager     clipboardManager;
 
     private List<Earthquake> earthquakes = new ArrayList<>();
     private Context context;
@@ -39,7 +38,7 @@ public class EarthquakesRecyclerAdapter extends RecyclerView.Adapter<Earthquakes
     static {
         final Calendar calendar = Calendar.getInstance();
         final TimeZone timeZone = calendar.getTimeZone();
-        simpleDateFormat = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+        simpleDateFormat = new SimpleDateFormat("HH:mm dd:MM:yyyy");
 
         simpleDateFormat.setTimeZone(timeZone);
     }

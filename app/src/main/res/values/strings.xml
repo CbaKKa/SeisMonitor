@@ -2,7 +2,11 @@
     <string name="app_name">SeisMonitor Test Branch</string>
     <string name="button_text_all_earthquakes">All Earthquakes</string>
 
-    <string name="earthquake_activity_bundle_key">EARTHQUAKE_BUNDLE_ITEM</string>
+    <string name="time_string">Time:</string>
 
-    <string name="time_string">Time: </string>
+    <!--Earthquake activity-->
+    <string name="earthquake_activity_bundle_key">EARTHQUAKE_BUNDLE_ITEM</string>
+    <string name="earthquake_activity_latitude_text">Latitude:</string>
+    <string name="earthquake_activity_longtitude_text">Longtitude:</string>
+    <string name="earthquake_activity_magnitude_text">Magnitude:</string>
 </resources>
