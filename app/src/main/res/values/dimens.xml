@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="text_view_magnitude_circle_diameter">65dp</dimen>
+    <dimen name="text_view_magnitude_text_size">30sp</dimen>
+    <dimen name="text_view_title_text_size">16sp</dimen>
+</resources>
